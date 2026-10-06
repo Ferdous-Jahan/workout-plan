@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Push Pull Legs</title>
+<meta name="description" content="A three-day Push / Pull / Legs & Core training split with sets, reps and target muscles.">
+<meta name="theme-color" content="#f6f5f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111214" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316161a'/%3E%3Crect x='10' y='24' width='8' height='16' rx='2' fill='%23ff7a52'/%3E%3Crect x='46' y='24' width='8' height='16' rx='2' fill='%23ff7a52'/%3E%3Crect x='18' y='29' width='28' height='6' rx='2' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f5f2;
+    --surface: #ffffff;
+    --text: #16161a;
+    --muted: #5e5e66;
+    --line: #e6e4df;
+    --push: #e4572e;
+    --pull: #2f6fdb;
+    --legs: #1f9d6b;
+    --radius: 18px;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.05);
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111214;
+      --surface: #1a1b1e;
+      --text: #f1f1f3;
+      --muted: #a0a0aa;
+      --line: #2a2b30;
+      --push: #ff7a52;
+      --pull: #6a9bff;
+      --legs: #3fcf94;
+      --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.25);
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #111214;
+    --surface: #1a1b1e;
+    --text: #f1f1f3;
+    --muted: #a0a0aa;
+    --line: #2a2b30;
+    --push: #ff7a52;
+    --pull: #6a9bff;
+    --legs: #3fcf94;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.25);
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 400 16px/1.5 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* Hero */
+  .hero { padding: 56px 0 28px; }
+
+  .eyebrow {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  h1, h2 {
+    font-family: "Barlow Condensed", Impact, sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    line-height: 0.95;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  h1 { font-size: clamp(48px, 12vw, 88px); }
+
+  h1 .dot { color: var(--muted); opacity: 0.5; }
+  h1 .p1 { color: var(--push); }
+  h1 .p2 { color: var(--pull); }
+  h1 .p3 { color: var(--legs); }
+
+  .lede {
+    max-width: 52ch;
+    margin: 16px 0 0;
+    color: var(--muted);
+    font-size: 17px;
+  }
+
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .stats li { font-size: 14px; color: var(--muted); }
+
+  .stats b {
+    display: block;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  /* Day nav */
+  .day-nav {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    padding: 12px 0;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .day-nav ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .day-nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 8px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.15s;
+  }
+
+  .day-nav a:hover { border-color: var(--accent); }
+
+  .day-nav a::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* Day card */
+  .day {
+    margin: 20px 0 28px;
+    padding: 28px 24px 20px;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    scroll-margin-top: 72px;
+  }
+
+  .push { --accent: var(--push); }
+  .pull { --accent: var(--pull); }
+  .legs { --accent: var(--legs); }
+
+  .day-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .day-tag {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h2 { font-size: clamp(36px, 8vw, 52px); }
+
+  .muscles {
+    margin: 6px 0 0;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .focus {
+    margin: 12px 0 0;
+    color: var(--muted);
+    max-width: 56ch;
+  }
+
+  .progress {
+    flex-shrink: 0;
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .progress-count {
+    display: block;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .bar {
+    height: 4px;
+    margin: 20px 0 8px;
+    border-radius: 4px;
+    background: var(--line);
+    overflow: hidden;
+  }
+
+  .bar span {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  /* Exercise list */
+  .exercises {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: ex;
+  }
+
+  .ex { counter-increment: ex; }
+
+  .ex + .ex { border-top: 1px solid var(--line); }
+
+  .ex label {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 4px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ex input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .check {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--line);
+    border-radius: 50%;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--muted);
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+
+  .check::before { content: counter(ex); }
+
+  .ex label:hover .check { border-color: var(--accent); }
+
+  .ex input:focus-visible + .check {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .ex input:checked + .check {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .ex input:checked + .check::before {
+    content: "";
+    width: 10px;
+    height: 6px;
+    border: solid #fff;
+    border-width: 0 0 2.5px 2.5px;
+    transform: translateY(-2px) rotate(-45deg);
+  }
+
+  .ex-main { min-width: 0; }
+
+  .ex-name {
+    display: block;
+    font-weight: 600;
+    transition: opacity 0.15s;
+  }
+
+  .ex-alt {
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .ex-target {
+    display: block;
+    margin-top: 2px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .ex input:checked ~ .ex-main .ex-name {
+    opacity: 0.45;
+    text-decoration: line-through;
+    text-decoration-color: var(--accent);
+  }
+
+  .dose {
+    text-align: right;
+    white-space: nowrap;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .dose small {
+    display: block;
+    margin-top: 4px;
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .dose .x { color: var(--accent); margin: 0 2px; }
+
+  .reset {
+    display: block;
+    margin: 8px 0 0 auto;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    font: 500 13px Inter, sans-serif;
+    cursor: pointer;
+  }
+
+  .reset:hover { color: var(--text); border-color: var(--muted); }
+
+  footer {
+    padding: 8px 0 56px;
+    font-size: 14px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding-top: 40px; }
+    .day { padding: 22px 16px 16px; }
+    .ex label { grid-template-columns: 28px 1fr auto; gap: 12px; }
+    .check { width: 28px; height: 28px; font-size: 14px; }
+    .dose { font-size: 19px; }
+    .day-nav a { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow">3-Day Training Split</p>
+      <h1><span class="p1">Push</span><span class="dot"> · </span><span class="p2">Pull</span><span class="dot"> · </span><span class="p3">Legs</span></h1>
+      <p class="lede">Three focused sessions that train every major muscle group while giving each one a full break before you hit it again.</p>
+      <ul class="stats">
+        <li><b>3</b>days</li>
+        <li><b>15</b>exercises</li>
+        <li><b>45</b>working sets</li>
+      </ul>
+    </header>
+
+    <nav class="day-nav" aria-label="Workout days">
+      <ul>
+        <li class="push"><a href="#push">Day 1 · Push</a></li>
+        <li class="pull"><a href="#pull">Day 2 · Pull</a></li>
+        <li class="legs"><a href="#legs">Day 3 · Legs</a></li>
+      </ul>
+    </nav>
+
+    <section class="day push" id="push" data-day="push">
+      <div class="day-head">
+        <div>
+          <span class="day-tag">Day 1</span>
+          <h2>Push</h2>
+          <p class="muscles">Chest · Shoulders · Triceps</p>
+        </div>
+        <div class="progress"><span class="progress-count">0/5</span>done</div>
+      </div>
+      <p class="focus">Pushing movements that target the front of the upper body.</p>
+      <div class="bar"><span></span></div>
+      <ol class="exercises">
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Incline Dumbbell Press</span><span class="ex-target">Upper chest</span></span>
+          <span class="dose">3<span class="x">×</span>8–12<small>sets × reps</small></span>
+        </label></li>
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Overhead Dumbbell Shoulder Press</span><span class="ex-target">Front &amp; side shoulders</span></span>
+          <span class="dose">3<span class="x">×</span>10–12<small>sets × reps</small></span>
+        </label></li>
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Chest Flyes <span class="ex-alt">or Push-ups</span></span><span class="ex-target">Mid chest</span></span>
+          <span class="dose">3<span class="x">×</span>12–15<small>sets × reps</small></span>
+        </label></li>
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Dumbbell Lateral Raises</span><span class="ex-target">Side delts, for shoulder width</span></span>
+          <span class="dose">3<span class="x">×</span>12–15<small>sets × reps</small></span>
+        </label></li>
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Triceps Rope Pushdowns <span class="ex-alt">or Overhead Dumbbell Extension</span></span><span class="ex-target">Triceps</span></span>
+          <span class="dose">3<span class="x">×</span>10–12<small>sets × reps</small></span>
+        </label></li>
+      </ol>
+      <button class="reset" type="button">Reset day</button>
+    </section>
+
+    <section class="day pull" id="pull" data-day="pull">
+      <div class="day-head">
+        <div>
+          <span class="day-tag">Day 2</span>
+          <h2>Pull</h2>
+          <p class="muscles">Back · Biceps · Rear Delts</p>
+        </div>
+        <div class="progress"><span class="progress-count">0/5</span>done</div>
+      </div>
+      <p class="focus">Pulling movements that build posture, back width and upper-body stability.</p>
+      <div class="bar"><span></span></div>
+      <ol class="exercises">
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Lat Pulldowns <span class="ex-alt">or Pull-ups</span></span><span class="ex-target">Lats &amp; upper back</span></span>
+          <span class="dose">3<span class="x">×</span>8–12<small>sets × reps</small></span>
+        </label></li>
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Bent-Over Dumbbell <span class="ex-alt">or</span> Barbell Rows</span><span class="ex-target">Mid back thickness</span></span>
+          <span class="dose">3<span class="x">×</span>8–12<small>sets × reps</small></span>
+        </label></li>
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Face Pulls <span class="ex-alt">or Rear Delt Flyes</span></span><span class="ex-target">Rear shoulders &amp; upper-back posture</span></span>
+          <span class="dose">3<span class="x">×</span>12–15<small>sets × reps</small></span>
+        </label></li>
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Incline Dumbbell Biceps Curls</span><span class="ex-target">Biceps</span></span>
+          <span class="dose">3<span class="x">×</span>10–12<small>sets × reps</small></span>
+        </label></li>
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Hammer Curls</span><span class="ex-target">Forearms &amp; side biceps</span></span>
+          <span class="dose">3<span class="x">×</span>10–12<small>sets × reps</small></span>
+        </label></li>
+      </ol>
+      <button class="reset" type="button">Reset day</button>
+    </section>
+
+    <section class="day legs" id="legs" data-day="legs">
+      <div class="day-head">
+        <div>
+          <span class="day-tag">Day 3</span>
+          <h2>Legs &amp; Core</h2>
+          <p class="muscles">Quads · Hamstrings · Glutes · Abs</p>
+        </div>
+        <div class="progress"><span class="progress-count">0/5</span>done</div>
+      </div>
+      <p class="focus">Lower-body strength and core stability, giving your upper body a full break.</p>
+      <div class="bar"><span></span></div>
+      <ol class="exercises">
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Goblet Squats <span class="ex-alt">or Barbell Back Squats</span></span><span class="ex-target">Quads &amp; glutes</span></span>
+          <span class="dose">3<span class="x">×</span>8–10<small>sets × reps</small></span>
+        </label></li>
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Dumbbell Romanian Deadlifts</span><span class="ex-target">Hamstrings &amp; glutes</span></span>
+          <span class="dose">3<span class="x">×</span>10–12<small>sets × reps</small></span>
+        </label></li>
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Walking Lunges <span class="ex-alt">or Bulgarian Split Squats</span></span><span class="ex-target">Single-leg strength &amp; stability</span></span>
+          <span class="dose">3<span class="x">×</span>10–12<small>reps per leg</small></span>
+        </label></li>
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Standing Calf Raises</span><span class="ex-target">Calves</span></span>
+          <span class="dose">3<span class="x">×</span>15<small>sets × reps</small></span>
+        </label></li>
+        <li class="ex"><label>
+          <input type="checkbox"><span class="check"></span>
+          <span class="ex-main"><span class="ex-name">Hanging Leg Raises <span class="ex-alt">or Cable Woodchoppers</span></span><span class="ex-target">Core &amp; obliques</span></span>
+          <span class="dose">3<span class="x">×</span>12–15<small>sets × reps</small></span>
+        </label></li>
+      </ol>
+      <button class="reset" type="button">Reset day</button>
+    </section>
+
+    <footer>Tap an exercise to tick it off. Progress is saved on this device.</footer>
+  </main>
+
+<script>
+  const STORAGE_KEY = 'ppl-progress'
+
+  function loadProgress() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}
+    } catch {
+      return {}
+    }
+  }
+
+  function saveProgress(progress) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
+    } catch {
+      // Storage unavailable (private mode); ticks still work for this visit.
+    }
+  }
+
+  const progress = loadProgress()
+
+  document.querySelectorAll('.day').forEach((day) => {
+    const key = day.dataset.day
+    const boxes = [...day.querySelectorAll('input[type="checkbox"]')]
+    const count = day.querySelector('.progress-count')
+    const bar = day.querySelector('.bar span')
+
+    function render() {
+      const done = boxes.filter((box) => box.checked).length
+      count.textContent = `${done}/${boxes.length}`
+      bar.style.width = `${(done / boxes.length) * 100}%`
+    }
+
+    function persist() {
+      progress[key] = boxes.map((box) => box.checked)
+      saveProgress(progress)
+      render()
+    }
+
+    const saved = progress[key] || []
+    boxes.forEach((box, i) => {
+      box.checked = Boolean(saved[i])
+      box.addEventListener('change', persist)
+    })
+
+    day.querySelector('.reset').addEventListener('click', () => {
+      boxes.forEach((box) => { box.checked = false })
+      persist()
+    })
+
+    render()
+  })
+</script>
+</body>
+</html>
